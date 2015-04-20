@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B52739291AE4C3850055AF7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52739281AE4C3850055AF7C /* AppDelegate.swift */; };
+		B527392B1AE4C3850055AF7C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B527392A1AE4C3850055AF7C /* GameScene.sks */; };
+		B527392D1AE4C3850055AF7C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527392C1AE4C3850055AF7C /* GameScene.swift */; };
+		B527392F1AE4C3850055AF7C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527392E1AE4C3850055AF7C /* GameViewController.swift */; };
+		B52739321AE4C3850055AF7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B52739301AE4C3850055AF7C /* Main.storyboard */; };
+		B52739341AE4C3850055AF7C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B52739331AE4C3850055AF7C /* Images.xcassets */; };
+		B52739371AE4C3850055AF7C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52739351AE4C3850055AF7C /* LaunchScreen.xib */; };
+		B52739431AE4C3850055AF7C /* SpacewarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52739421AE4C3850055AF7C /* SpacewarTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B527393D1AE4C3850055AF7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B527391B1AE4C3850055AF7C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B52739221AE4C3850055AF7C;
+			remoteInfo = Spacewar;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B52739231AE4C3850055AF7C /* Spacewar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spacewar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B52739271AE4C3850055AF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B52739281AE4C3850055AF7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B527392A1AE4C3850055AF7C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		B527392C1AE4C3850055AF7C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		B527392E1AE4C3850055AF7C /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		B52739311AE4C3850055AF7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B52739331AE4C3850055AF7C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B52739361AE4C3850055AF7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		B527393C1AE4C3850055AF7C /* SpacewarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpacewarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B52739411AE4C3850055AF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B52739421AE4C3850055AF7C /* SpacewarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacewarTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B52739201AE4C3850055AF7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B52739391AE4C3850055AF7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B527391A1AE4C3850055AF7C = {
+			isa = PBXGroup;
+			children = (
+				B52739251AE4C3850055AF7C /* Spacewar */,
+				B527393F1AE4C3850055AF7C /* SpacewarTests */,
+				B52739241AE4C3850055AF7C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B52739241AE4C3850055AF7C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B52739231AE4C3850055AF7C /* Spacewar.app */,
+				B527393C1AE4C3850055AF7C /* SpacewarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B52739251AE4C3850055AF7C /* Spacewar */ = {
+			isa = PBXGroup;
+			children = (
+				B52739281AE4C3850055AF7C /* AppDelegate.swift */,
+				B527392A1AE4C3850055AF7C /* GameScene.sks */,
+				B527392C1AE4C3850055AF7C /* GameScene.swift */,
+				B527392E1AE4C3850055AF7C /* GameViewController.swift */,
+				B52739301AE4C3850055AF7C /* Main.storyboard */,
+				B52739331AE4C3850055AF7C /* Images.xcassets */,
+				B52739351AE4C3850055AF7C /* LaunchScreen.xib */,
+				B52739261AE4C3850055AF7C /* Supporting Files */,
+			);
+			path = Spacewar;
+			sourceTree = "<group>";
+		};
+		B52739261AE4C3850055AF7C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B52739271AE4C3850055AF7C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B527393F1AE4C3850055AF7C /* SpacewarTests */ = {
+			isa = PBXGroup;
+			children = (
+				B52739421AE4C3850055AF7C /* SpacewarTests.swift */,
+				B52739401AE4C3850055AF7C /* Supporting Files */,
+			);
+			path = SpacewarTests;
+			sourceTree = "<group>";
+		};
+		B52739401AE4C3850055AF7C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B52739411AE4C3850055AF7C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B52739221AE4C3850055AF7C /* Spacewar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B52739461AE4C3850055AF7C /* Build configuration list for PBXNativeTarget "Spacewar" */;
+			buildPhases = (
+				B527391F1AE4C3850055AF7C /* Sources */,
+				B52739201AE4C3850055AF7C /* Frameworks */,
+				B52739211AE4C3850055AF7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Spacewar;
+			productName = Spacewar;
+			productReference = B52739231AE4C3850055AF7C /* Spacewar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B527393B1AE4C3850055AF7C /* SpacewarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B52739491AE4C3850055AF7C /* Build configuration list for PBXNativeTarget "SpacewarTests" */;
+			buildPhases = (
+				B52739381AE4C3850055AF7C /* Sources */,
+				B52739391AE4C3850055AF7C /* Frameworks */,
+				B527393A1AE4C3850055AF7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B527393E1AE4C3850055AF7C /* PBXTargetDependency */,
+			);
+			name = SpacewarTests;
+			productName = SpacewarTests;
+			productReference = B527393C1AE4C3850055AF7C /* SpacewarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B527391B1AE4C3850055AF7C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Dan Kang";
+				TargetAttributes = {
+					B52739221AE4C3850055AF7C = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					B527393B1AE4C3850055AF7C = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = B52739221AE4C3850055AF7C;
+					};
+				};
+			};
+			buildConfigurationList = B527391E1AE4C3850055AF7C /* Build configuration list for PBXProject "Spacewar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B527391A1AE4C3850055AF7C;
+			productRefGroup = B52739241AE4C3850055AF7C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B52739221AE4C3850055AF7C /* Spacewar */,
+				B527393B1AE4C3850055AF7C /* SpacewarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B52739211AE4C3850055AF7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B52739371AE4C3850055AF7C /* LaunchScreen.xib in Resources */,
+				B52739341AE4C3850055AF7C /* Images.xcassets in Resources */,
+				B527392B1AE4C3850055AF7C /* GameScene.sks in Resources */,
+				B52739321AE4C3850055AF7C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B527393A1AE4C3850055AF7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B527391F1AE4C3850055AF7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B527392D1AE4C3850055AF7C /* GameScene.swift in Sources */,
+				B527392F1AE4C3850055AF7C /* GameViewController.swift in Sources */,
+				B52739291AE4C3850055AF7C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B52739381AE4C3850055AF7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B52739431AE4C3850055AF7C /* SpacewarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B527393E1AE4C3850055AF7C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B52739221AE4C3850055AF7C /* Spacewar */;
+			targetProxy = B527393D1AE4C3850055AF7C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B52739301AE4C3850055AF7C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B52739311AE4C3850055AF7C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B52739351AE4C3850055AF7C /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B52739361AE4C3850055AF7C /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B52739441AE4C3850055AF7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B52739451AE4C3850055AF7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B52739471AE4C3850055AF7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Spacewar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B52739481AE4C3850055AF7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Spacewar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B527394A1AE4C3850055AF7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SpacewarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spacewar.app/Spacewar";
+			};
+			name = Debug;
+		};
+		B527394B1AE4C3850055AF7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SpacewarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spacewar.app/Spacewar";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B527391E1AE4C3850055AF7C /* Build configuration list for PBXProject "Spacewar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B52739441AE4C3850055AF7C /* Debug */,
+				B52739451AE4C3850055AF7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B52739461AE4C3850055AF7C /* Build configuration list for PBXNativeTarget "Spacewar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B52739471AE4C3850055AF7C /* Debug */,
+				B52739481AE4C3850055AF7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B52739491AE4C3850055AF7C /* Build configuration list for PBXNativeTarget "SpacewarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B527394A1AE4C3850055AF7C /* Debug */,
+				B527394B1AE4C3850055AF7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B527391B1AE4C3850055AF7C /* Project object */;
+}
