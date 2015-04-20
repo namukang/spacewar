@@ -15,6 +15,7 @@
 		B52739341AE4C3850055AF7C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B52739331AE4C3850055AF7C /* Images.xcassets */; };
 		B52739371AE4C3850055AF7C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52739351AE4C3850055AF7C /* LaunchScreen.xib */; };
 		B52739431AE4C3850055AF7C /* SpacewarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52739421AE4C3850055AF7C /* SpacewarTests.swift */; };
+		B57E7C851AE4D1550056513C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E7C841AE4D1550056513C /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		B527393C1AE4C3850055AF7C /* SpacewarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpacewarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B52739411AE4C3850055AF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B52739421AE4C3850055AF7C /* SpacewarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacewarTests.swift; sourceTree = "<group>"; };
+		B57E7C841AE4D1550056513C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57E7C851AE4D1550056513C /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +66,7 @@
 		B527391A1AE4C3850055AF7C = {
 			isa = PBXGroup;
 			children = (
+				B57E7C841AE4D1550056513C /* CoreMotion.framework */,
 				B52739251AE4C3850055AF7C /* Spacewar */,
 				B527393F1AE4C3850055AF7C /* SpacewarTests */,
 				B52739241AE4C3850055AF7C /* Products */,
@@ -353,6 +357,7 @@
 				INFOPLIST_FILE = Spacewar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -363,6 +368,7 @@
 				INFOPLIST_FILE = Spacewar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -419,6 +425,7 @@
 				B52739481AE4C3850055AF7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B52739491AE4C3850055AF7C /* Build configuration list for PBXNativeTarget "SpacewarTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +434,7 @@
 				B527394B1AE4C3850055AF7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

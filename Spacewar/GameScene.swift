@@ -7,16 +7,23 @@
 //
 
 import SpriteKit
+import CoreMotion
 
 class GameScene: SKScene {
+
+    let kShipName = "ship"
+    let motionManager = CMMotionManager()
+
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
+        motionManager.startAccelerometerUpdates()
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+
+        backgroundColor = SKColor.blackColor()
+
+        let ship = makeShip()
+        ship.position = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
+        addChild(ship)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -41,5 +48,29 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        processUserMotionForUpdate(currentTime)
+    }
+
+    func makeShip() -> SKNode {
+        let ship = SKSpriteNode(imageNamed:"Spaceship")
+        ship.name = kShipName
+        ship.xScale = 0.1
+        ship.yScale = 0.1
+
+        ship.physicsBody = SKPhysicsBody(rectangleOfSize: ship.frame.size)
+        ship.physicsBody!.dynamic = true
+        ship.physicsBody!.affectedByGravity = false
+        ship.physicsBody!.mass = 0.02
+
+        return ship
+    }
+
+    func processUserMotionForUpdate(currentTime: CFTimeInterval) {
+        let ship = childNodeWithName(kShipName) as! SKSpriteNode
+        if let data = motionManager.accelerometerData {
+            if fabs(data.acceleration.y) > 0.2 {
+                ship.physicsBody!.applyForce(CGVectorMake(40.0 * CGFloat(data.acceleration.y), 0))
+            }
+        }
     }
 }
