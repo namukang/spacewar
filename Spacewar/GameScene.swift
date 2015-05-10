@@ -33,7 +33,13 @@ class GameScene: SKScene {
         /* Called when a touch begins */
 
         if let touch = touches.first as? UITouch {
-            tapQueue.append(1)
+            let location = touch.locationInView(view)
+            if location.x > view?.center.x {
+                // Fire bullet
+                tapQueue.append(1)
+            } else {
+                // Propel ship
+            }
         }
 
 //        for touch in (touches as! Set<UITouch>) {
