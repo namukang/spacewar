@@ -41,7 +41,7 @@ class GameScene: SKScene {
                 // Propel ship
                 if let ship = childNodeWithName(kShipName) {
                     let rotation = Float(ship.zRotation) + Float(M_PI_2)
-                    let thrust: CGFloat = 10.0
+                    let thrust: CGFloat = 500.0
                     let xv = thrust * CGFloat(cosf(rotation))
                     let yv = thrust * CGFloat(sinf(rotation))
                     let thrustVector = CGVectorMake(xv, yv)
@@ -82,7 +82,7 @@ class GameScene: SKScene {
         ship.physicsBody = SKPhysicsBody(rectangleOfSize: ship.frame.size)
         ship.physicsBody!.dynamic = true
         ship.physicsBody!.affectedByGravity = false
-        ship.physicsBody!.mass = 0.02
+        ship.physicsBody!.mass = 1.0
 
         return ship
     }
@@ -118,8 +118,10 @@ class GameScene: SKScene {
     func processUserMotionForUpdate(currentTime: CFTimeInterval) {
         let ship = childNodeWithName(kShipName) as! SKSpriteNode
         if let data = motionManager.accelerometerData {
-            if fabs(data.acceleration.y) > 0.2 {
-                ship.physicsBody!.applyForce(CGVectorMake(40.0 * CGFloat(data.acceleration.y), 0))
+            if fabs(data.acceleration.y) > 0.1 {
+                // Rotate ship
+                let rotate = SKAction.rotateByAngle(CGFloat(data.acceleration.y * M_PI_2 * -0.1), duration: 0.1)
+                ship.runAction(rotate)
             }
         }
     }
