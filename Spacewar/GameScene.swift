@@ -39,6 +39,14 @@ class GameScene: SKScene {
                 tapQueue.append(1)
             } else {
                 // Propel ship
+                if let ship = childNodeWithName(kShipName) {
+                    let rotation = Float(ship.zRotation) + Float(M_PI_2)
+                    let thrust: CGFloat = 10.0
+                    let xv = thrust * CGFloat(cosf(rotation))
+                    let yv = thrust * CGFloat(sinf(rotation))
+                    let thrustVector = CGVectorMake(xv, yv)
+                    ship.physicsBody?.applyForce(thrustVector)
+                }
             }
         }
 
