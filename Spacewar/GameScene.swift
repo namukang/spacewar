@@ -12,6 +12,7 @@ import CoreMotion
 class GameScene: SKScene {
 
     let kShipName = "ship"
+    let kEnemyName = "enemy"
     let kBulletName = "bullet"
     let motionManager = CMMotionManager()
 
@@ -20,13 +21,22 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         motionManager.startAccelerometerUpdates()
+        scaleMode = SKSceneScaleMode.AspectFit
         physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
-
         backgroundColor = SKColor.blackColor()
 
-        let ship = makeShip()
-        ship.position = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
+        let ship = makeShip(kShipName)
+        ship.position = CGPoint(x: size.width * 0.7, y: size.height * 0.3)
         addChild(ship)
+
+        let enemy = makeShip(kEnemyName)
+        enemy.position = CGPoint(x: size.width * 0.3, y: size.height * 0.7)
+        enemy.zRotation = CGFloat(M_PI)
+        if let enemy = enemy as? SKSpriteNode {
+            enemy.color = SKColor.redColor()
+            enemy.colorBlendFactor = 0.5
+        }
+        addChild(enemy)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -73,9 +83,9 @@ class GameScene: SKScene {
         processUserTapsForUpdate(currentTime)
     }
 
-    func makeShip() -> SKNode {
+    func makeShip(name: String) -> SKNode {
         let ship = SKSpriteNode(imageNamed:"Spaceship")
-        ship.name = kShipName
+        ship.name = name
         ship.xScale = 0.1
         ship.yScale = 0.1
 
