@@ -87,9 +87,17 @@ class GameScene: SKScene {
         return ship
     }
 
-    func makeBullet() -> SKNode {
+    func makeBullet(ship: SKNode) -> SKNode {
         let bullet = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(4, 8))
         bullet.name = kBulletName
+        bullet.zRotation = ship.zRotation
+
+        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: bullet.frame.size)
+        bullet.physicsBody!.velocity = ship.physicsBody!.velocity
+        bullet.physicsBody!.dynamic = false
+        bullet.physicsBody!.affectedByGravity = false
+        bullet.physicsBody!.mass = 0.1
+
         return bullet
     }
 
@@ -101,9 +109,17 @@ class GameScene: SKScene {
 
     func fireShipBullets() {
         if let ship = childNodeWithName(kShipName) {
-            let bullet = makeBullet()
-            bullet.position = CGPointMake(ship.position.x, ship.position.y + ship.frame.size.height - bullet.frame.size.height / 2)
-            let bulletDestination = CGPointMake(ship.position.x, frame.size.height + bullet.frame.size.height / 2)
+            let bullet = makeBullet(ship)
+
+            let shipDirection = Float(ship.zRotation) + Float(M_PI_2)
+            let padding = ship.frame.size.height - bullet.frame.size.height / 2
+            let bulletX = ship.position.x + CGFloat(cosf(shipDirection)) * padding
+            let bulletY = ship.position.y + CGFloat(sinf(shipDirection)) * padding
+            bullet.position = CGPointMake(bulletX, bulletY)
+
+            let destX = ship.position.x + CGFloat(cosf(shipDirection)) * 500
+            let destY = ship.position.y + CGFloat(sinf(shipDirection)) * 500
+            let bulletDestination = CGPointMake(destX, destY)
             fireBullet(bullet, destination: bulletDestination, duration: 1.0)
         }
     }
