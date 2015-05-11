@@ -37,6 +37,16 @@ class GameScene: SKScene {
             enemy.colorBlendFactor = 0.5
         }
         addChild(enemy)
+
+        let star = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(5, 5))
+        let center = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        star.position = center
+        addChild(star)
+
+        let gravityField = SKFieldNode.radialGravityField()
+        gravityField.position = center
+        gravityField.strength = 0.5
+        addChild(gravityField)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
