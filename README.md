@@ -1,3 +1,5 @@
+![Screenshot](https://github.com/dskang/spacewar/raw/master/img/simulator.png)
+
 ## Background
 
 In the spring of 2015, I took a class at Princeton called Great Moments of Computing in which we studied pivotal developments in computing by reading seminal papers and patents.
