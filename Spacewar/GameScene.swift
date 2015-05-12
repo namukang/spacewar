@@ -163,6 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else {
                 // Propel ship
                 propelTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "propelShip", userInfo: nil, repeats: true)
+                ship.runAction(SKAction.colorizeWithColor(UIColor.greenColor(), colorBlendFactor: 0.5, duration: 0.1))
             }
         }
     }
@@ -173,6 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if location.x < view?.center.x {
                 // Stop propelling ship
                 propelTimer?.invalidate()
+                ship.runAction(SKAction.colorizeWithColor(UIColor.greenColor(), colorBlendFactor: 0.0, duration: 0.1))
             }
         }
     }
