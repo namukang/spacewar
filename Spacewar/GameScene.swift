@@ -136,6 +136,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         // firstBody is always a ship
+        if secondBody.categoryBitMask & starCategory != 0 {
+            let randomX = CGFloat(arc4random_uniform(UInt32(frame.size.width)))
+            let randomY = CGFloat(arc4random_uniform(UInt32(frame.size.height)))
+            let randomPoint = CGPoint(x: randomX, y: randomY)
+            firstBody.node!.runAction(SKAction.moveTo(randomPoint, duration: 0))
+            return
+        }
+
         firstBody.node!.userData!["dead"] = true
         let explosionAction = SKAction.sequence([SKAction.removeFromParent()])
         firstBody.node!.runAction(explosionAction)
@@ -217,10 +225,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func updateLocations() {
         for node in children as! [SKNode] {
-            let width = frame.size.width
-            let height = frame.size.height
-            node.position.x = (node.position.x + width) % width
-            node.position.y = (node.position.y + height) % height
+            if node.name == kShipName || node.name == kEnemyName || node.name == kMissileName {
+                let width = frame.size.width
+                let height = frame.size.height
+                node.position.x = (node.position.x + width) % width
+                node.position.y = (node.position.y + height) % height
+            }
         }
     }
 
@@ -244,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let xv = thrust * CGFloat(cosf(rotation))
         let yv = thrust * CGFloat(sinf(rotation))
         let thrustVector = CGVectorMake(xv, yv)
-        if arc4random_uniform(5) == 0 {
+        if arc4random_uniform(10) == 0 {
             enemy.physicsBody?.applyForce(thrustVector)
         }
 
