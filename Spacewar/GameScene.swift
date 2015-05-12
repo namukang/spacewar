@@ -17,7 +17,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let shipCategory: UInt32 = 0x1 << 0
     let missileCategory: UInt32 = 0x1 << 1
     let starCategory: UInt32 = 0x1 << 2
-    let edgeCategory: UInt32 = 0x1 << 3
 
     let kShipName = "ship"
     let kEnemyName = "enemy"
@@ -44,8 +43,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Setup your scene here */
         motionManager.startAccelerometerUpdates()
         scaleMode = SKSceneScaleMode.AspectFit
-        physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
-        physicsBody!.categoryBitMask = edgeCategory
         physicsWorld.gravity = CGVectorMake(0, 0)
         physicsWorld.contactDelegate = self
         backgroundColor = SKColor.blackColor()
@@ -214,8 +211,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         processUserMotionForUpdate(currentTime)
         processUserTapsForUpdate(currentTime)
-
         moveEnemy()
+        updateLocations()
+    }
+
+    func updateLocations() {
+        for node in children as! [SKNode] {
+            let width = frame.size.width
+            let height = frame.size.height
+            node.position.x = (node.position.x + width) % width
+            node.position.y = (node.position.y + height) % height
+        }
     }
 
     func moveEnemy() {
@@ -238,7 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let xv = thrust * CGFloat(cosf(rotation))
         let yv = thrust * CGFloat(sinf(rotation))
         let thrustVector = CGVectorMake(xv, yv)
-        if arc4random_uniform(5) == 0 {
+        if arc4random_uniform(10) == 0 {
             enemy.physicsBody?.applyForce(thrustVector)
         }
 
@@ -272,7 +278,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ship.physicsBody!.mass = 1.0
         ship.physicsBody!.categoryBitMask = shipCategory
         ship.physicsBody!.contactTestBitMask = shipCategory | missileCategory | starCategory
-        ship.physicsBody!.collisionBitMask = edgeCategory
 
         return ship
     }
