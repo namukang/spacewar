@@ -148,6 +148,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
 
+        let playerDead = ship.userData!["dead"] as! Bool
+        if playerDead {
+            return
+        }
+
         if let touch = touches.first as? UITouch {
             let location = touch.locationInView(view)
             if location.x > view?.center.x {
