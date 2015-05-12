@@ -137,6 +137,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
 
+        if secondBody.categoryBitMask & missileCategory != 0 {
+            secondBody.node!.removeFromParent()
+        }
+
         // Avoid resetting the game twice when one player dies then other player dies
         let shipDead = ship.userData!["dead"] as! Bool
         let enemyDead = enemy.userData!["dead"] as! Bool
@@ -195,6 +199,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         processUserMotionForUpdate(currentTime)
         processUserTapsForUpdate(currentTime)
+
+        moveEnemy()
+    }
+
+    func moveEnemy() {
+        let dead = enemy.userData!["dead"] as! Bool
+        if dead {
+            return
+        }
+
+        // Turn randomly
+        var rand = Double(arc4random()) / Double(UINT32_MAX)
+        if arc4random_uniform(2) == 0 {
+            rand = -1 * rand
+        }
+        let rotate = SKAction.rotateByAngle(CGFloat(rand * M_PI_2 * -0.2), duration: 0.1)
+        enemy.runAction(rotate)
+
+        // Thrust randomly
+        let rotation = Float(enemy.zRotation) + Float(M_PI_2)
+        let thrust: CGFloat = 500.0
+        let xv = thrust * CGFloat(cosf(rotation))
+        let yv = thrust * CGFloat(sinf(rotation))
+        let thrustVector = CGVectorMake(xv, yv)
+        if arc4random_uniform(5) == 0 {
+            enemy.physicsBody?.applyForce(thrustVector)
+        }
+
+        // Fire missile randomly
+        if arc4random_uniform(20) == 0 {
+            fireMissile(enemy)
+        }
     }
 
     func makeStar() -> SKNode {
@@ -238,13 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return missile
     }
 
-    func fireMissile(missile: SKNode, destination: CGPoint, duration: CFTimeInterval) {
-        let missileAction = SKAction.sequence([SKAction.moveTo(destination, duration: duration), SKAction.waitForDuration(3.0/60.0), SKAction.removeFromParent()])
-        missile.runAction(missileAction)
-        addChild(missile)
-    }
-
-    func fireShipMissiles() {
+    func fireMissile(ship: SKNode) {
         let missile = makeMissile(ship)
 
         let shipDirection = Float(ship.zRotation) + Float(M_PI_2)
@@ -255,13 +285,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let destX = ship.position.x + CGFloat(cosf(shipDirection)) * 500
         let destY = ship.position.y + CGFloat(sinf(shipDirection)) * 500
-        let missileDestination = CGPointMake(destX, destY)
-        fireMissile(missile, destination: missileDestination, duration: 1.0)
+        let destination = CGPointMake(destX, destY)
+
+        let missileAction = SKAction.sequence([SKAction.moveTo(destination, duration: 1.0), SKAction.waitForDuration(3.0/60.0), SKAction.removeFromParent()])
+        missile.runAction(missileAction)
+        addChild(missile)
     }
 
     func processUserTapsForUpdate(currentTime: CFTimeInterval) {
         for tap in tapQueue {
-            fireShipMissiles()
+            fireMissile(ship)
             tapQueue.removeAtIndex(0)
         }
     }
