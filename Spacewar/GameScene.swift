@@ -54,11 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoreLabel)
 
         ship = makeShip(kShipName)
-        ship.position = CGPoint(x: size.width * 0.7, y: size.height * 0.3)
+        ship.position = CGPoint(x: size.width * 0.8, y: size.height * 0.2)
         addChild(ship)
 
         enemy = makeShip(kEnemyName)
-        enemy.position = CGPoint(x: size.width * 0.3, y: size.height * 0.7)
+        enemy.position = CGPoint(x: size.width * 0.2, y: size.height * 0.8)
         enemy.zRotation = CGFloat(M_PI)
         if let enemy = enemy as? SKSpriteNode {
             enemy.color = SKColor.redColor()
@@ -76,16 +76,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(gravityField)
     }
 
+    func delay(delay: Double, closure: () -> ()) {
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
+        dispatch_after(time, dispatch_get_main_queue(), closure)
+    }
+
+
     func newGame() {
         ship.removeFromParent()
         enemy.removeFromParent()
 
+        let playerLost = ship.userData!["dead"] as! Bool
+        let opponentLost = enemy.userData!["dead"] as! Bool
+        if playerLost && opponentLost {
+        } else if playerLost {
+            score--
+        } else {
+            score++
+        }
+
         ship = makeShip(kShipName)
-        ship.position = CGPoint(x: size.width * 0.7, y: size.height * 0.3)
+        ship.position = CGPoint(x: size.width * 0.8, y: size.height * 0.2)
         addChild(ship)
 
         enemy = makeShip(kEnemyName)
-        enemy.position = CGPoint(x: size.width * 0.3, y: size.height * 0.7)
+        enemy.position = CGPoint(x: size.width * 0.2, y: size.height * 0.8)
         enemy.zRotation = CGFloat(M_PI)
         if let enemy = enemy as? SKSpriteNode {
             enemy.color = SKColor.redColor()
@@ -105,16 +120,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
+
         // firstBody is always a ship
-        let secondBodyIsShip = secondBody.categoryBitMask & shipCategory != 0
-        if !secondBodyIsShip {
-            if firstBody == ship {
-                score--
-            } else {
-                score++
+        firstBody.node!.userData!["dead"] = true
+        let explosionAction = SKAction.sequence([SKAction.removeFromParent()])
+        firstBody.node!.runAction(explosionAction)
+
+        let shipsCollided = secondBody.categoryBitMask & shipCategory != 0
+        if shipsCollided {
+            secondBody.node!.userData!["dead"] = true
+            secondBody.node!.runAction(explosionAction)
+            delay(3.0) {
+                self.resetGame = true
             }
         }
-        resetGame = true
+
+        // Avoid resetting the game twice when one player dies then other player dies
+        let shipDead = ship.userData!["dead"] as! Bool
+        let enemyDead = enemy.userData!["dead"] as! Bool
+        if shipsCollided || !(shipDead && enemyDead) {
+            delay(3.0) {
+                self.resetGame = true
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -160,6 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func makeShip(name: String) -> SKNode {
         let ship = SKSpriteNode(imageNamed:"Spaceship")
+        ship.userData = ["dead": false]
         ship.name = name
         ship.xScale = 0.1
         ship.yScale = 0.1
