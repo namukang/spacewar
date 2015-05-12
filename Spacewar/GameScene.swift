@@ -11,7 +11,7 @@ import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
-    let gravityStrength: Float = 0.5
+    let gravityStrength: Float = 0.6
     let thrustStrength: CGFloat = 500.0
 
     let shipCategory: UInt32 = 0x1 << 0
