@@ -11,6 +11,9 @@ import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
+    let gravityStrength: Float = 0.5
+    let thrustStrength: CGFloat = 500.0
+
     let shipCategory: UInt32 = 0x1 << 0
     let missileCategory: UInt32 = 0x1 << 1
     let starCategory: UInt32 = 0x1 << 2
@@ -74,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let center = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
         let gravityField = SKFieldNode.radialGravityField()
         gravityField.position = center
-        gravityField.strength = 0.5
+        gravityField.strength = gravityStrength
         addChild(gravityField)
     }
 
@@ -185,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func propelShip() {
         let rotation = Float(ship.zRotation) + Float(M_PI_2)
-        let thrust: CGFloat = 500.0
+        let thrust: CGFloat = thrustStrength
         let xv = thrust * CGFloat(cosf(rotation))
         let yv = thrust * CGFloat(sinf(rotation))
         let thrustVector = CGVectorMake(xv, yv)
@@ -219,7 +222,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // Thrust randomly
         let rotation = Float(enemy.zRotation) + Float(M_PI_2)
-        let thrust: CGFloat = 500.0
+        let thrust: CGFloat = thrustStrength
         let xv = thrust * CGFloat(cosf(rotation))
         let yv = thrust * CGFloat(sinf(rotation))
         let thrustVector = CGVectorMake(xv, yv)
@@ -228,7 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         // Fire missile randomly
-        if arc4random_uniform(20) == 0 {
+        if arc4random_uniform(25) == 0 {
             fireMissile(enemy)
         }
     }
@@ -301,9 +304,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func processUserMotionForUpdate(currentTime: CFTimeInterval) {
         if let data = motionManager.accelerometerData {
-            if fabs(data.acceleration.y) > 0.1 {
+            if fabs(data.acceleration.y) > 0.2 {
+                var strength = data.acceleration.y
+                let maxStrength = 0.5
+                if strength > maxStrength {
+                    strength = maxStrength
+                } else if strength < -1 * maxStrength {
+                    strength = -1 * maxStrength
+                }
                 // Rotate ship
-                let rotate = SKAction.rotateByAngle(CGFloat(data.acceleration.y * M_PI_2 * -0.1), duration: 0.1)
+                let rotate = SKAction.rotateByAngle(CGFloat(strength * M_PI_2 * -0.1), duration: 0.1)
                 ship.runAction(rotate)
             }
         }
