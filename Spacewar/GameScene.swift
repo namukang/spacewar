@@ -21,12 +21,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let kMissileName = "missile"
     let motionManager = CMMotionManager()
 
+    var resetGame = false
     var scoreLabel: SKLabelNode!
     var score: Int = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
+
+    var ship: SKNode!
+    var enemy: SKNode!
 
     var tapQueue: Array<Int> = []
 
@@ -49,11 +53,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         addChild(scoreLabel)
 
-        let ship = makeShip(kShipName)
+        ship = makeShip(kShipName)
         ship.position = CGPoint(x: size.width * 0.7, y: size.height * 0.3)
         addChild(ship)
 
-        let enemy = makeShip(kEnemyName)
+        enemy = makeShip(kEnemyName)
         enemy.position = CGPoint(x: size.width * 0.3, y: size.height * 0.7)
         enemy.zRotation = CGFloat(M_PI)
         if let enemy = enemy as? SKSpriteNode {
@@ -72,6 +76,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(gravityField)
     }
 
+    func newGame() {
+        ship.removeFromParent()
+        enemy.removeFromParent()
+
+        ship = makeShip(kShipName)
+        ship.position = CGPoint(x: size.width * 0.7, y: size.height * 0.3)
+        addChild(ship)
+
+        enemy = makeShip(kEnemyName)
+        enemy.position = CGPoint(x: size.width * 0.3, y: size.height * 0.7)
+        enemy.zRotation = CGFloat(M_PI)
+        if let enemy = enemy as? SKSpriteNode {
+            enemy.color = SKColor.redColor()
+            enemy.colorBlendFactor = 0.5
+        }
+        addChild(enemy)
+
+        resetGame = false
+    }
+
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody, secondBody: SKPhysicsBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -81,21 +105,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
-        if firstBody.categoryBitMask & shipCategory != 0 {
-            println("ship")
-        } else if firstBody.categoryBitMask & missileCategory != 0 {
-            println("missile")
-        } else {
-            println("star")
+        // firstBody is always a ship
+        let secondBodyIsShip = secondBody.categoryBitMask & shipCategory != 0
+        if !secondBodyIsShip {
+            if firstBody == ship {
+                score--
+            } else {
+                score++
+            }
         }
-
-        if secondBody.categoryBitMask & shipCategory != 0 {
-            println("ship")
-        } else if secondBody.categoryBitMask & missileCategory != 0 {
-            println("missile")
-        } else {
-            println("star")
-        }
+        resetGame = true
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -108,20 +127,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 tapQueue.append(1)
             } else {
                 // Propel ship
-                if let ship = childNodeWithName(kShipName) {
-                    let rotation = Float(ship.zRotation) + Float(M_PI_2)
-                    let thrust: CGFloat = 500.0
-                    let xv = thrust * CGFloat(cosf(rotation))
-                    let yv = thrust * CGFloat(sinf(rotation))
-                    let thrustVector = CGVectorMake(xv, yv)
-                    ship.physicsBody?.applyForce(thrustVector)
-                }
+                let rotation = Float(ship.zRotation) + Float(M_PI_2)
+                let thrust: CGFloat = 500.0
+                let xv = thrust * CGFloat(cosf(rotation))
+                let yv = thrust * CGFloat(sinf(rotation))
+                let thrustVector = CGVectorMake(xv, yv)
+                ship.physicsBody?.applyForce(thrustVector)
             }
         }
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        if resetGame {
+            newGame()
+        }
         processUserMotionForUpdate(currentTime)
         processUserTapsForUpdate(currentTime)
     }
@@ -173,20 +193,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func fireShipMissiles() {
-        if let ship = childNodeWithName(kShipName) {
-            let missile = makeMissile(ship)
+        let missile = makeMissile(ship)
 
-            let shipDirection = Float(ship.zRotation) + Float(M_PI_2)
-            let padding = ship.frame.size.height - missile.frame.size.height / 2
-            let missileX = ship.position.x + CGFloat(cosf(shipDirection)) * padding
-            let missileY = ship.position.y + CGFloat(sinf(shipDirection)) * padding
-            missile.position = CGPointMake(missileX, missileY)
+        let shipDirection = Float(ship.zRotation) + Float(M_PI_2)
+        let padding = ship.frame.size.height - missile.frame.size.height / 2
+        let missileX = ship.position.x + CGFloat(cosf(shipDirection)) * padding
+        let missileY = ship.position.y + CGFloat(sinf(shipDirection)) * padding
+        missile.position = CGPointMake(missileX, missileY)
 
-            let destX = ship.position.x + CGFloat(cosf(shipDirection)) * 500
-            let destY = ship.position.y + CGFloat(sinf(shipDirection)) * 500
-            let missileDestination = CGPointMake(destX, destY)
-            fireMissile(missile, destination: missileDestination, duration: 1.0)
-        }
+        let destX = ship.position.x + CGFloat(cosf(shipDirection)) * 500
+        let destY = ship.position.y + CGFloat(sinf(shipDirection)) * 500
+        let missileDestination = CGPointMake(destX, destY)
+        fireMissile(missile, destination: missileDestination, duration: 1.0)
     }
 
     func processUserTapsForUpdate(currentTime: CFTimeInterval) {
@@ -197,7 +215,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func processUserMotionForUpdate(currentTime: CFTimeInterval) {
-        let ship = childNodeWithName(kShipName) as! SKSpriteNode
         if let data = motionManager.accelerometerData {
             if fabs(data.acceleration.y) > 0.1 {
                 // Rotate ship
