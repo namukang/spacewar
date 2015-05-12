@@ -49,6 +49,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         backgroundColor = SKColor.blackColor()
 
+        // Create stars in background
+        for index in 1...50 {
+            let randomX = CGFloat(arc4random_uniform(UInt32(frame.size.width)))
+            let randomY = CGFloat(arc4random_uniform(UInt32(frame.size.height)))
+            let dot = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(2, 2))
+            dot.position = CGPoint(x: randomX, y: randomY)
+            addChild(dot)
+        }
+
         // Create scoreLabel
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.text = "Score: 0"
@@ -231,7 +240,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         // Fire missile randomly
-        if arc4random_uniform(25) == 0 {
+        let playerDead = ship.userData!["dead"] as! Bool
+        if arc4random_uniform(25) == 0 && !playerDead {
             fireMissile(enemy)
         }
     }
@@ -241,7 +251,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let center = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
         star.position = center
 
-        star.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        star.physicsBody = SKPhysicsBody(circleOfRadius: 0.1)
         star.physicsBody!.dynamic = false
         star.physicsBody!.categoryBitMask = starCategory
 
