@@ -23,6 +23,7 @@ class GameScene: SKScene {
         motionManager.startAccelerometerUpdates()
         scaleMode = SKSceneScaleMode.AspectFit
         physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+        physicsWorld.gravity = CGVectorMake(0, 0)
         backgroundColor = SKColor.blackColor()
 
         let ship = makeShip(kShipName)
@@ -100,8 +101,6 @@ class GameScene: SKScene {
         ship.yScale = 0.1
 
         ship.physicsBody = SKPhysicsBody(rectangleOfSize: ship.frame.size)
-        ship.physicsBody!.dynamic = true
-        ship.physicsBody!.affectedByGravity = false
         ship.physicsBody!.mass = 1.0
 
         return ship
@@ -114,8 +113,6 @@ class GameScene: SKScene {
 
         bullet.physicsBody = SKPhysicsBody(rectangleOfSize: bullet.frame.size)
         bullet.physicsBody!.velocity = ship.physicsBody!.velocity
-        bullet.physicsBody!.dynamic = false
-        bullet.physicsBody!.affectedByGravity = false
         bullet.physicsBody!.mass = 0.1
 
         return bullet
