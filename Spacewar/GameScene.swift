@@ -32,6 +32,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var ship: SKNode!
     var enemy: SKNode!
 
+    var propelTimer: NSTimer?
+
     var tapQueue: Array<Int> = []
 
     override func didMoveToView(view: SKView) {
@@ -160,16 +162,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 tapQueue.append(1)
             } else {
                 // Propel ship
-                let rotation = Float(ship.zRotation) + Float(M_PI_2)
-                let thrust: CGFloat = 500.0
-                let xv = thrust * CGFloat(cosf(rotation))
-                let yv = thrust * CGFloat(sinf(rotation))
-                let thrustVector = CGVectorMake(xv, yv)
-                ship.physicsBody?.applyForce(thrustVector)
+                propelTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "propelShip", userInfo: nil, repeats: true)
             }
         }
     }
-   
+
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let location = touch.locationInView(view)
+            if location.x < view?.center.x {
+                // Stop propelling ship
+                propelTimer?.invalidate()
+            }
+        }
+    }
+
+    func propelShip() {
+        let rotation = Float(ship.zRotation) + Float(M_PI_2)
+        let thrust: CGFloat = 500.0
+        let xv = thrust * CGFloat(cosf(rotation))
+        let yv = thrust * CGFloat(sinf(rotation))
+        let thrustVector = CGVectorMake(xv, yv)
+        ship.physicsBody?.applyForce(thrustVector)
+    }
+
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         if resetGame {
