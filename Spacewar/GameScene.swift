@@ -14,11 +14,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let shipCategory: UInt32 = 0x1 << 0
     let missileCategory: UInt32 = 0x1 << 1
     let starCategory: UInt32 = 0x1 << 2
+    let edgeCategory: UInt32 = 0x1 << 3
 
     let kShipName = "ship"
     let kEnemyName = "enemy"
     let kMissileName = "missile"
     let motionManager = CMMotionManager()
+
+    var scoreLabel: SKLabelNode!
+    var score: Int = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
 
     var tapQueue: Array<Int> = []
 
@@ -27,9 +35,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         motionManager.startAccelerometerUpdates()
         scaleMode = SKSceneScaleMode.AspectFit
         physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+        physicsBody!.categoryBitMask = edgeCategory
         physicsWorld.gravity = CGVectorMake(0, 0)
         physicsWorld.contactDelegate = self
         backgroundColor = SKColor.blackColor()
+
+        // Create scoreLabel
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.fontSize = 30
+        scoreLabel.fontColor = SKColor.whiteColor()
+        scoreLabel.position = CGPoint(x: frame.size.width, y: frame.size.height - 45)
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
+        addChild(scoreLabel)
 
         let ship = makeShip(kShipName)
         ship.position = CGPoint(x: size.width * 0.7, y: size.height * 0.3)
@@ -130,7 +148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ship.physicsBody!.mass = 1.0
         ship.physicsBody!.categoryBitMask = shipCategory
         ship.physicsBody!.contactTestBitMask = shipCategory | missileCategory | starCategory
-        ship.physicsBody!.collisionBitMask = 0x0
+        ship.physicsBody!.collisionBitMask = edgeCategory
 
         return ship
     }
