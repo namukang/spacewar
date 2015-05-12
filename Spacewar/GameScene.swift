@@ -244,13 +244,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let xv = thrust * CGFloat(cosf(rotation))
         let yv = thrust * CGFloat(sinf(rotation))
         let thrustVector = CGVectorMake(xv, yv)
-        if arc4random_uniform(10) == 0 {
+        if arc4random_uniform(5) == 0 {
             enemy.physicsBody?.applyForce(thrustVector)
         }
 
         // Fire missile randomly
         let playerDead = ship.userData!["dead"] as! Bool
-        if arc4random_uniform(25) == 0 && !playerDead {
+        if arc4random_uniform(50) == 0 && !playerDead {
             fireMissile(enemy)
         }
     }
