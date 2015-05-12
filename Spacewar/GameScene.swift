@@ -38,6 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var propelTimer: NSTimer?
 
     var tapQueue: Array<Int> = []
+    var dots: Array<SKNode> = []
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -49,15 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         backgroundColor = SKColor.blackColor()
 
-        // Create stars in background
-        for index in 1...50 {
-            let randomX = CGFloat(arc4random_uniform(UInt32(frame.size.width)))
-            let randomY = CGFloat(arc4random_uniform(UInt32(frame.size.height)))
-            let dot = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(2, 2))
-            dot.position = CGPoint(x: randomX, y: randomY)
-            addChild(dot)
-        }
-
         // Create scoreLabel
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.text = "Score: 0"
@@ -67,19 +59,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         addChild(scoreLabel)
 
-        ship = makeShip(kShipName)
-        ship.position = CGPoint(x: size.width * 0.8, y: size.height * 0.2)
-        addChild(ship)
-
-        enemy = makeShip(kEnemyName)
-        enemy.position = CGPoint(x: size.width * 0.2, y: size.height * 0.8)
-        enemy.zRotation = CGFloat(M_PI)
-        if let enemy = enemy as? SKSpriteNode {
-            enemy.color = SKColor.redColor()
-            enemy.colorBlendFactor = 0.5
-        }
-        addChild(enemy)
-
         let star = makeStar()
         addChild(star)
 
@@ -88,6 +67,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gravityField.position = center
         gravityField.strength = gravityStrength
         addChild(gravityField)
+
+        newGame()
     }
 
     func delay(delay: Double, closure: () -> ()) {
@@ -97,18 +78,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 
     func newGame() {
-        ship.removeFromParent()
-        enemy.removeFromParent()
-
-        let playerLost = ship.userData!["dead"] as! Bool
-        let opponentLost = enemy.userData!["dead"] as! Bool
-        if playerLost && opponentLost {
-        } else if playerLost {
-            score--
-        } else {
-            score++
+        if ship != nil {
+            ship.removeFromParent()
+        }
+        if enemy != nil {
+            enemy.removeFromParent()
+        }
+        if dots.count > 0 {
+            removeChildrenInArray(dots)
         }
 
+        // Create stars in background
+        dots = []
+        for index in 1...50 {
+            let randomX = CGFloat(arc4random_uniform(UInt32(frame.size.width)))
+            let randomY = CGFloat(arc4random_uniform(UInt32(frame.size.height)))
+            let dot = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(2, 2))
+            dot.position = CGPoint(x: randomX, y: randomY)
+            addChild(dot)
+            dots.append(dot)
+        }
+
+        // Update score
+        if ship != nil && enemy != nil {
+            let playerLost = ship.userData!["dead"] as! Bool
+            let opponentLost = enemy.userData!["dead"] as! Bool
+            if playerLost && opponentLost {
+            } else if playerLost {
+                score--
+            } else if opponentLost {
+                score++
+            }
+        }
+
+        // Create ships
         ship = makeShip(kShipName)
         ship.position = CGPoint(x: size.width * 0.8, y: size.height * 0.2)
         addChild(ship)
