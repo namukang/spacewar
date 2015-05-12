@@ -291,6 +291,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         missile.physicsBody!.velocity = ship.physicsBody!.velocity
         missile.physicsBody!.mass = 0.1
         missile.physicsBody!.categoryBitMask = missileCategory
+        missile.physicsBody!.collisionBitMask = 0x0
+        missile.physicsBody!.fieldBitMask = 0x0
 
         return missile
     }
@@ -304,13 +306,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let missileY = ship.position.y + CGFloat(sinf(shipDirection)) * padding
         missile.position = CGPointMake(missileX, missileY)
 
-        let destX = ship.position.x + CGFloat(cosf(shipDirection)) * 500
-        let destY = ship.position.y + CGFloat(sinf(shipDirection)) * 500
-        let destination = CGPointMake(destX, destY)
-
-        let missileAction = SKAction.sequence([SKAction.moveTo(destination, duration: 1.0), SKAction.waitForDuration(3.0/60.0), SKAction.removeFromParent()])
-        missile.runAction(missileAction)
         addChild(missile)
+
+        let impulse: CGFloat = 40.0
+        let dx = CGFloat(cosf(shipDirection)) * impulse
+        let dy = CGFloat(sinf(shipDirection)) * impulse
+        let impulseVector = CGVectorMake(dx, dy)
+        missile.physicsBody!.applyImpulse(impulseVector)
+
+        let missileAction = SKAction.sequence([SKAction.waitForDuration(1.0), SKAction.removeFromParent()])
+        missile.runAction(missileAction)
+
     }
 
     func processUserTapsForUpdate(currentTime: CFTimeInterval) {
@@ -322,7 +328,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func processUserMotionForUpdate(currentTime: CFTimeInterval) {
         if let data = motionManager.accelerometerData {
-            if fabs(data.acceleration.y) > 0.2 {
+            if fabs(data.acceleration.y) > 0.1 {
                 var strength = data.acceleration.y
                 let maxStrength = 0.5
                 if strength > maxStrength {
